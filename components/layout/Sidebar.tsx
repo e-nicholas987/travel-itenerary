@@ -16,26 +16,26 @@ import {
 } from "@/components/ui/icons";
 import NewspaperClippingIcon from "../ui/icons/NewspaperClippingIcon";
 import { useActiveRoute } from "@/hooks/useActiveRoute";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES, RouteValue } from "@/constants/routes";
 
 type SidebarItem = {
   label: string;
-  href: string;
-  Icon: ComponentType<{ className?: string }>;
+  href: RouteValue;
+  icon: ComponentType<{ className?: string }>;
 };
 
 const SIDEBAR_ITEMS: SidebarItem[] = [
-  { label: "Activities", href: ROUTES.ACTIVITIES, Icon: RoadHorizonIcon },
-  { label: "Hotels", href: ROUTES.HOTELS, Icon: BuildingsIcon },
-  { label: "Flights", href: ROUTES.FLIGHTS, Icon: AirplaneTiltIcon },
-  { label: "Study", href: ROUTES.STUDY, Icon: StudentIcon },
-  { label: "Visa", href: ROUTES.VISA, Icon: NewspaperClippingIcon },
-  { label: "Immigration", href: ROUTES.IMMIGRATION, Icon: SuitcaseRollingIcon },
-  { label: "Medical", href: ROUTES.MEDICAL, Icon: FirstAidKitIcon },
+  { label: "Activities", href: ROUTES.ACTIVITIES, icon: RoadHorizonIcon },
+  { label: "Hotels", href: ROUTES.HOTELS, icon: BuildingsIcon },
+  { label: "Flights", href: ROUTES.FLIGHTS, icon: AirplaneTiltIcon },
+  { label: "Study", href: ROUTES.STUDY, icon: StudentIcon },
+  { label: "Visa", href: ROUTES.VISA, icon: NewspaperClippingIcon },
+  { label: "Immigration", href: ROUTES.IMMIGRATION, icon: SuitcaseRollingIcon },
+  { label: "Medical", href: ROUTES.MEDICAL, icon: FirstAidKitIcon },
   {
     label: "Vacation Packages",
     href: ROUTES.VACATION_PACKAGES,
-    Icon: PackageIcon,
+    icon: PackageIcon,
   },
 ];
 
@@ -57,7 +57,7 @@ export default function Sidebar() {
                 isActive ? "bg-primary-600/10" : "hover:bg-neutral-300/50"
               )}
             >
-              <item.Icon
+              <item.icon
                 className={cn(
                   "size-8 text-neutral-700 transition-colors",
                   isActive ? "text-primary-600" : "text-neutral-700"
