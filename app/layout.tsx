@@ -27,7 +27,7 @@ export default function RootLayout({
         <header className="h-(--topbar-height) fixed bg-white top-0 z-10 inset-x-0">
           <Topbar />
         </header>
-        <div className="max-w-360 mt-(--topbar-height) mx-auto flex min-h-svh bg-neutral-300 gap-8 2xl:gap-16 p-5 2xl:p-10">
+        <div className="max-w-400 mt-(--topbar-height) mx-auto flex min-h-svh bg-neutral-300 gap-8 2xl:gap-16 p-5 2xl:p-10">
           <aside className="w-75 h-fit max-h-[calc(100vh-12.5rem)] overflow-y-auto shrink-0 sticky top-[calc(var(--topbar-height)+1.25rem)] 2xl:top-[calc(var(--topbar-height)+2.5rem)] left-0">
             <Sidebar />
           </aside>

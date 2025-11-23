@@ -41,7 +41,7 @@ const UTILITY_NAV_ITEMS: NavItem[] = [
 
 export default function Topbar() {
   return (
-    <div className="max-w-360 mx-auto px-5 2xl:px-10 h-full flex w-full items-center justify-between gap-6 xl:gap-8">
+    <div className="max-w-400 mx-auto px-5 2xl:px-10 h-full flex w-full items-center justify-between gap-6 xl:gap-8">
       <div className="flex w-full gap-7">
         <Link
           href={ROUTES.HOME}
