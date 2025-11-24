@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
+import { Loader2Icon } from "lucide-react";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary" | "white";
 type ButtonSize = "sm" | "md" | "lg";
@@ -9,6 +10,7 @@ type ButtonProps = {
   size?: ButtonSize;
   fullWidth?: boolean;
   className?: string;
+  isLoading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function buttonVariants({
@@ -21,7 +23,7 @@ export function buttonVariants({
   className?: string;
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
+    "inline-flex items-center relative justify-center gap-2 rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
 
   const variants = {
     primary: "bg-primary-600 text-white hover:bg-primary-600/90 shadow-sm",
@@ -46,6 +48,7 @@ export default function Button({
   size = "md",
   children,
   className,
+  isLoading = false,
   ...props
 }: ButtonProps) {
   return (
@@ -54,7 +57,13 @@ export default function Button({
       className={buttonVariants({ variant, size, className })}
       {...props}
     >
-      {children}
+      {isLoading && (
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Loader2Icon className="size-4 animate-spin" />
+        </span>
+      )}
+
+      {isLoading ? <span className="invisible">{children}</span> : children}
     </button>
   );
 }

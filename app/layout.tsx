@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Topbar from "@/components/layout/topbar/Topbar";
 import Sidebar from "@/components/layout/Sidebar";
+import QueryProvider from "@/providers/QueryProvider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -24,15 +25,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        <header className="h-(--topbar-height) fixed bg-white top-0 z-10 inset-x-0">
-          <Topbar />
-        </header>
-        <div className="layout-shell max-w-400 mx-auto flex min-h-svh bg-neutral-300 gap-8 2xl:gap-16 p-5 2xl:p-10">
-          <aside className="w-75 h-fit max-h-[calc(100vh-12.5rem)] overflow-y-auto shrink-0 sticky top-layout-offset left-0">
-            <Sidebar />
-          </aside>
-          <main className="flex flex-1 bg-white">{children}</main>
-        </div>
+        <QueryProvider>
+          <header className="h-(--topbar-height) fixed bg-white top-0 z-10 inset-x-0">
+            <Topbar />
+          </header>
+          <div className="layout-shell max-w-400 mx-auto flex min-h-svh bg-neutral-300 gap-8 2xl:gap-16 p-5 2xl:p-10">
+            <aside className="w-75 h-fit max-h-[calc(100vh-12.5rem)] overflow-y-auto shrink-0 sticky top-layout-offset left-0">
+              <Sidebar />
+            </aside>
+            <main className="flex flex-1 bg-white">{children}</main>
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );
