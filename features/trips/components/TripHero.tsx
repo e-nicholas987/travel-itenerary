@@ -35,54 +35,60 @@ const ITINERARY_ACTIONS: ItineraryActionCardProps[] = [
 
 export default function TripHero() {
   return (
-    <section>
+    <section className="space-y-4 sm:space-y-5">
       <div
         style={{ backgroundImage: `url(${IMAGES.tripHeroIllustration})` }}
-        className="relative h-50 p-6 bg-cover bg-top-left bg-no-repeat"
+        className="relative h-40 sm:h-50 p-4 sm:p-6 bg-cover bg-top-left bg-no-repeat rounded-sm"
       >
         <Link
           href={ROUTES.HOME}
           aria-label="back to home"
-          className="size-12 cursor-pointer bg-white/20 rounded-sm hover:bg-primary-600/12 hover:text-primary-600 grid place-items-center"
+          className="size-10 sm:size-12 cursor-pointer bg-white/20 rounded-sm hover:bg-primary-600/12 hover:text-primary-600 grid place-items-center"
         >
           <ArrowLeftIcon className="size-6" />
         </Link>
       </div>
 
-      <div className="flex items-center justify-between mt-5">
-        <div className="flex mt-2 gap-2 h-7.5 px-2 text-secondary-900 items-center bg-secondary-100 w-fit">
+      <div className="mt-3 sm:mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap gap-2 h-7.5 px-2 text-secondary-900 items-center bg-secondary-100 w-fit">
           <CalendarBlankIcon />
-          <span className="text-xs font-medium">21 March 2024</span>
+          <span className="text-[10px] sm:text-xs font-medium">
+            21 March 2024
+          </span>
           <ArrowRightIcon />
-          <span className="text-xs font-medium">21 April 2024</span>
+          <span className="text-[10px] sm:text-xs font-medium">
+            21 April 2024
+          </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             aria-label="add user"
-            className="text-primary-600 hover:bg-primary-600 hover:text-white transition-colors duration-300 grid place-items-center rounded-sm w-40 bg-primary-100 h-11.5"
+            className="text-primary-600 hover:bg-primary-600 hover:text-white transition-colors duration-300 grid place-items-center rounded-sm w-full sm:w-40 bg-primary-100 h-10 sm:h-11.5"
           >
             <UserPlusIcon />
           </button>
           <button
             type="button"
             aria-label="open menu"
-            className="grid place-items-center hover:bg-primary-600 hover:text-white transition-colors duration-300 rounded-sm w-11.5 h-11.5"
+            className="grid place-items-center hover:bg-primary-600 hover:text-white transition-colors duration-300 rounded-sm w-10 h-10 sm:w-11.5 sm:h-11.5"
           >
             <DotsThreeIcon />
           </button>
         </div>
       </div>
 
-      <h1 className="text-2xl font-semibold leading-8">Bahamas Family Trip</h1>
+      <h1 className="text-xl sm:text-2xl font-semibold leading-7 sm:leading-8">
+        Bahamas Family Trip
+      </h1>
 
-      <div className="flex items-center justify-between">
-        <p className="text-black-secondary font-medium">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs sm:text-sm text-black-secondary font-medium">
           New York,  United States of America{" "}
           <span className="text-neutral-500"> | </span>Solo Trip
         </p>
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Image
             src={IMAGES.tripSummaryAvatar}
             alt="Trip summary avatar"
@@ -101,7 +107,7 @@ export default function TripHero() {
         </div>
       </div>
 
-      <div className="flex gap-1 mt-5">
+      <div className="mt-5 flex flex-col gap-3 lg:flex-row lg:gap-6 xl:gap-8">
         {ITINERARY_ACTIONS.map((action) => (
           <ItineraryActionCard
             key={action.title}

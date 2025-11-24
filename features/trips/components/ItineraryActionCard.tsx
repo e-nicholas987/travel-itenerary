@@ -16,7 +16,7 @@ export default function ItineraryActionCard({
   return (
     <div
       className={cn(
-        "max-w-67.5 flex gap-2 flex-col w-full py-4 px-3.5 rounded-sm h-48.25",
+        "w-full flex gap-2 flex-col py-4 px-3.5 rounded-sm h-48.25 lg:w-auto lg:max-w-67.5",
         {
           "bg-primary-1100": title === "activities",
           "bg-primary-100": title === "hotels",

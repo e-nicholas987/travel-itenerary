@@ -72,21 +72,21 @@ export default function ActivitiesCard({
   return (
     <article
       className={cn(
-        "rounded-sm overflow-hidden",
-        !isSearchResult
-          ? "grid grid-cols-[1fr_auto] shadow-sm"
-          : " border border-neutral-200"
+        "rounded-sm overflow-hidden border border-neutral-200 shadow-sm",
+        !isSearchResult && "grid grid-cols-[1fr_auto]"
       )}
     >
-      <div className="flex  bg-white p-6 pr-0">
+      <div className="flex flex-col gap-4 bg-white p-4 sm:flex-row sm:gap-6 sm:p-6 sm:pr-0">
         <ImageCarousel
           images={primaryPhoto?.small ? [primaryPhoto.small] : []}
         />
         <div className="flex flex-1 flex-col gap-2">
-          <header className="flex flex-col pl-4 pr-10 gap-2 md:flex-row md:items-start md:justify-between">
+          <header className="flex flex-col gap-3 pl-0 sm:pl-4 sm:pr-6 md:flex-row md:items-start md:justify-between md:gap-4">
             <div>
-              <h3 className="text-xl font-semibold leading-5">{name}</h3>
-              <p className="font-medium mt-0.5 line-clamp-2">
+              <h3 className="text-lg sm:text-xl font-semibold leading-5 line-clamp-2">
+                {name}
+              </h3>
+              <p className="mt-0.5 text-xs sm:text-sm font-medium line-clamp-2">
                 {shortDescription || "Description not available."}
               </p>
 
@@ -107,23 +107,23 @@ export default function ActivitiesCard({
 
                 <div className="flex gap-1 items-center">
                   <Clock size={18} />
-                  <span>1 hour</span>
+                  <span className="text-xs sm:text-sm">1 hour</span>
                 </div>
               </div>
             </div>
 
-            <div className="text-right">
-              <p className="text-[1.75rem] text-black-primary font-semibold">
+            <div className="mt-2 md:mt-0 text-right min-w-[120px]">
+              <p className="text-xl sm:text-[1.75rem] text-black-primary font-semibold">
                 {formattedPrice}
               </p>
-              <p className="mt-1  font-medium text-black-primary">
+              <p className="mt-1 text-xs sm:text-sm font-medium text-black-primary">
                 10:30 AM on Mar 19
               </p>
             </div>
           </header>
 
-          <section className="mt-2 border-y  pl-4 pr-10 flex items-center justify-between border-neutral-200 py-3.5">
-            <p className="font-medium text-secondary-black">
+          <section className="mt-2 flex flex-col gap-3 border-y border-neutral-200 py-3.5 text-xs sm:text-sm font-medium text-secondary-black sm:flex-row sm:items-center sm:justify-between sm:pl-4 sm:pr-6">
+            <p className="font-medium">
               What&apos;s included: Admission to the Empire State Building{" "}
               <span className="text-primary-600">See more</span>
             </p>
@@ -140,10 +140,10 @@ export default function ActivitiesCard({
             </div>
           </section>
 
-          <footer className="mt-2 pl-4 pr-10 flex items-center justify-between">
+          <footer className="mt-2 flex flex-col gap-3 pl-0 sm:flex-row sm:items-center sm:justify-between sm:pl-4 sm:pr-6">
             {!isSearchResult && (
               <>
-                <div className="flex gap-4 text-sm 2xl:text-[1.125rem] font-semibold text-primary-600">
+                <div className="flex flex-wrap gap-3 text-sm 2xl:text-[1.125rem] font-semibold text-primary-600">
                   <button type="button" className="hover:underline">
                     Activity details
                   </button>
@@ -163,7 +163,7 @@ export default function ActivitiesCard({
             {isSearchResult && (
               <Button
                 className={cn(
-                  "ml-auto",
+                  "w-full sm:w-auto sm:ml-auto",
                   isInItinerary &&
                     "bg-error-100 text-error-900 hover:bg-error-100/90"
                 )}

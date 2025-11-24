@@ -78,11 +78,11 @@ export default function ItineraryCategorySection({
   const styles = ITINERARY_CATEGORY_VARIANTS[type];
 
   return (
-    <section className={cn("p-6 rounded-sm", styles.bg)}>
-      <div className="flex items-center justify-between mb-6">
+    <section className={cn("rounded-sm p-4 sm:p-6", styles.bg)}>
+      <div className="mb-4 sm:mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className={cn("flex items-center gap-2.5", styles.text)}>
           <Icon className="size-6" />
-          <p className="text-base font-medium">{label}</p>
+          <p className="text-sm sm:text-base font-medium">{label}</p>
         </div>
 
         <Link

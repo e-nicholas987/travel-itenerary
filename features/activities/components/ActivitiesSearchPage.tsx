@@ -41,7 +41,7 @@ export default function ActivitiesSearchPage() {
   }, [locations?.message, searchAttractionsError]);
 
   return (
-    <section className="flex-1 rounded-sm bg-white p-8">
+    <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">
       <PageHeaderWithBack
         backHref={ROUTES.PLAN_TRIP}
         backLabel="Back to trip itineraries"
