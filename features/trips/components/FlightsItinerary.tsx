@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import ItineraryCategorySection from "./ItineraryCategorySection";
 import ItineraryEmptyState from "./ItineraryEmptyState";
 import FlightCard from "@/features/flights/components/FlightCard";
@@ -11,15 +10,10 @@ import { FLIGHTS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 
 export default function FlightsItinerary() {
   const { getItem, setItem } = useLocalStorage();
-  const [flights, setFlights] = useState<FlightOffer[]>([]);
-
-  useEffect(() => {
+  const [flights, setFlights] = useState<FlightOffer[]>(() => {
     const stored = getItem<FlightOffer[]>(FLIGHTS_ITINERARY_STORAGE_KEY);
-
-    if (stored && Array.isArray(stored)) {
-      setFlights(stored);
-    }
-  }, [getItem]);
+    return Array.isArray(stored) ? stored : [];
+  });
 
   const handleRemoveFromItinerary = (token: string) => {
     const updated = flights.filter((flight) => flight.token !== token);

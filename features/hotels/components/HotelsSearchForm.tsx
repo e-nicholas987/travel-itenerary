@@ -151,189 +151,225 @@ export default function HotelsSearchForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
+      className="mb-8 rounded-sm bg-neutral-300 p-4 sm:p-5 lg:p-6"
     >
-      <div className="flex flex-col gap-4 md:flex-row">
-        <Controller
-          name="dest_id"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              id="hotels-destination"
-              label="Where are you going?"
+      <div className="space-y-5 sm:space-y-6">
+        <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+            <h3 className="text-sm font-semibold text-black-primary">
+              Destination & dates
+            </h3>
+            <p className="text-xs font-medium text-black-secondary">
+              Choose where you&apos;re going and when you&apos;d like to stay.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <Controller
+              name="dest_id"
+              control={control}
+              render={({ field }) => (
+                <SelectField
+                  id="hotels-destination"
+                  label="Where are you going?"
+                  isRequired
+                  placeholder="Search city, landmark, or attraction"
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={destinationOptions}
+                  enableSearch
+                  searchValue={destinationSearchTerm}
+                  onSearchChange={setDestinationSearchTerm}
+                  isLoading={isLoadingDestinations}
+                  error={errors.dest_id?.message}
+                  containerClassName="w-full"
+                />
+              )}
+            />
+
+            <Controller
+              name="search_type"
+              control={control}
+              render={({ field }) => (
+                <SelectField
+                  id="hotels-search-type"
+                  label="Search type"
+                  isRequired
+                  placeholder="Select search type"
+                  value={field.value}
+                  containerClassName="w-full"
+                  onChange={field.onChange}
+                  options={searchTypeOptions}
+                  error={errors.search_type?.message}
+                />
+              )}
+            />
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <InputField
+              id="hotels-arrival-date"
+              label="Check-in"
+              type="date"
+              {...register("arrival_date")}
               isRequired
-              placeholder="Search city, landmark, or attraction"
-              value={field.value}
-              onChange={field.onChange}
-              options={destinationOptions}
-              enableSearch
-              searchValue={destinationSearchTerm}
-              onSearchChange={setDestinationSearchTerm}
-              isLoading={isLoadingDestinations}
-              error={errors.dest_id?.message}
-              containerClassName="w-full md:flex-2"
+              error={errors.arrival_date?.message}
             />
-          )}
-        />
-        <Controller
-          name="search_type"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              id="hotels-search-type"
-              label="Search type"
+            <InputField
+              id="hotels-departure-date"
+              label="Check-out"
+              type="date"
+              {...register("departure_date")}
               isRequired
-              placeholder="Select search type"
-              value={field.value}
-              containerClassName="w-full md:flex-1"
-              onChange={field.onChange}
-              options={searchTypeOptions}
-              error={errors.search_type?.message}
+              error={errors.departure_date?.message}
             />
-          )}
-        />
+          </div>
+        </section>
+
+        <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+            <h3 className="text-sm font-semibold text-black-primary">
+              Guests & rooms
+            </h3>
+            <p className="text-xs font-medium text-black-secondary">
+              Tell us who&apos;s travelling so we can match the right stay.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <InputField
+              id="hotels-adults"
+              label="Adults"
+              type="number"
+              inputMode="tel"
+              min={1}
+              placeholder="Number of adults"
+              {...register("adults")}
+              error={errors.adults?.message}
+            />
+
+            <InputField
+              id="hotels-children-age"
+              label="Children ages"
+              type="number"
+              inputMode="tel"
+              placeholder="e.g. 0-17"
+              {...register("children_age")}
+              error={errors.children_age?.message}
+            />
+
+            <InputField
+              id="hotels-room-qty"
+              label="Rooms"
+              type="number"
+              inputMode="tel"
+              min={1}
+              placeholder="Number of rooms"
+              {...register("room_qty")}
+              error={errors.room_qty?.message}
+            />
+          </div>
+        </section>
+
+        <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+            <h3 className="text-sm font-semibold text-black-primary">
+              Preferences & filters
+            </h3>
+            <p className="text-xs font-medium text-black-secondary">
+              Optional settings to tailor results to your needs.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <Controller
+              name="currency_code"
+              control={control}
+              render={({ field }) => (
+                <SelectField
+                  id="hotels-currency"
+                  label="Currency"
+                  placeholder="Select currency"
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={currencyOptions}
+                  isLoading={isLoadingCurrencies}
+                  error={errors.currency_code?.message}
+                />
+              )}
+            />
+
+            <Controller
+              name="languagecode"
+              control={control}
+              render={({ field }) => (
+                <SelectField
+                  id="hotels-language"
+                  label="Language"
+                  placeholder="Select language"
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={languageOptions}
+                  isLoading={isLoadingLanguages}
+                  error={errors.languagecode?.message}
+                />
+              )}
+            />
+
+            <InputField
+              id="hotels-location"
+              label="Location (country code)"
+              placeholder="e.g. US"
+              {...register("location")}
+              error={errors.location?.message}
+            />
+          </div>
+
+          <div className="grid gap-4 border-t border-neutral-500/40 pt-4 md:grid-cols-3">
+            <Controller
+              name="units"
+              control={control}
+              render={({ field }) => (
+                <SelectField
+                  id="hotels-units"
+                  label="Units"
+                  placeholder="Select units"
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={HOTELS_UNIT_OPTIONS}
+                  error={errors.units?.message}
+                />
+              )}
+            />
+
+            <Controller
+              name="temperature_unit"
+              control={control}
+              render={({ field }) => (
+                <SelectField
+                  id="hotels-temperature-unit"
+                  label="Temperature unit"
+                  placeholder="Select temperature unit"
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={HOTELS_TEMPERATURE_UNIT_OPTIONS}
+                  error={errors.temperature_unit?.message}
+                />
+              )}
+            />
+
+            <InputField
+              id="hotels-categories-filter"
+              label="Category filter"
+              placeholder="Optional filter tag"
+              {...register("categories_filter")}
+              error={errors.categories_filter?.message}
+            />
+          </div>
+        </section>
       </div>
 
-      <div className="flex flex-col gap-4 md:flex-row">
-        <InputField
-          id="hotels-arrival-date"
-          label="Check-in"
-          type="date"
-          {...register("arrival_date")}
-          isRequired
-          error={errors.arrival_date?.message}
-        />
-        <InputField
-          id="hotels-departure-date"
-          label="Check-out"
-          type="date"
-          {...register("departure_date")}
-          isRequired
-          error={errors.departure_date?.message}
-        />
-      </div>
-
-      <div className="flex flex-col gap-4 md:flex-row">
-        <InputField
-          id="hotels-adults"
-          label="Adults"
-          type="number"
-          inputMode="tel"
-          min={1}
-          placeholder="Enter number of adults"
-          {...register("adults")}
-          error={errors.adults?.message}
-        />
-
-        <InputField
-          id="hotels-children-age"
-          label="Children ages"
-          type="number"
-          inputMode="tel"
-          placeholder="e.g. 0-17"
-          {...register("children_age")}
-          error={errors.children_age?.message}
-        />
-
-        <InputField
-          id="hotels-room-qty"
-          label="Rooms"
-          type="number"
-          inputMode="tel"
-          min={1}
-          placeholder="Enter number of rooms"
-          {...register("room_qty")}
-          error={errors.room_qty?.message}
-        />
-      </div>
-
-      <div className="flex flex-col gap-4 md:flex-row">
-        <Controller
-          name="currency_code"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              id="hotels-currency"
-              label="Currency"
-              placeholder="Select currency"
-              value={field.value}
-              onChange={field.onChange}
-              options={currencyOptions}
-              isLoading={isLoadingCurrencies}
-              error={errors.currency_code?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="languagecode"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              id="hotels-language"
-              label="Language"
-              placeholder="Select language"
-              value={field.value}
-              onChange={field.onChange}
-              options={languageOptions}
-              isLoading={isLoadingLanguages}
-              error={errors.languagecode?.message}
-            />
-          )}
-        />
-
-        <InputField
-          id="hotels-location"
-          label="Location (country code)"
-          placeholder="e.g. US"
-          {...register("location")}
-          error={errors.location?.message}
-        />
-      </div>
-
-      <div className="flex flex-col gap-4 md:flex-row border-t border-neutral-500/40 pt-4">
-        <Controller
-          name="units"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              id="hotels-units"
-              label="Units"
-              placeholder="Select units"
-              value={field.value}
-              onChange={field.onChange}
-              options={HOTELS_UNIT_OPTIONS}
-              error={errors.units?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="temperature_unit"
-          control={control}
-          render={({ field }) => (
-            <SelectField
-              id="hotels-temperature-unit"
-              label="Temperature unit"
-              placeholder="Select temperature unit"
-              value={field.value}
-              onChange={field.onChange}
-              options={HOTELS_TEMPERATURE_UNIT_OPTIONS}
-              error={errors.temperature_unit?.message}
-            />
-          )}
-        />
-
-        <InputField
-          id="hotels-categories-filter"
-          label="Category filter"
-          placeholder="Optional filter tag"
-          {...register("categories_filter")}
-          error={errors.categories_filter?.message}
-        />
-      </div>
-
-      <div className="flex items-center justify-end gap-3 pt-4">
+      <div className="mt-4 flex items-center justify-end gap-3 border-t border-neutral-500/40 pt-4">
         <Button
           type="button"
           variant="tertiary"

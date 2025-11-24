@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import ItineraryCategorySection from "./ItineraryCategorySection";
 import ItineraryEmptyState from "./ItineraryEmptyState";
@@ -11,16 +11,12 @@ import { ACTIVITIES_ITINERARY_STORAGE_KEY } from "../../../constants/storageKeys
 
 export default function ActivitiesItinerary() {
   const { getItem, setItem } = useLocalStorage();
-  const [activities, setActivities] = useState<AttractionsProduct[]>([]);
-
-  useEffect(() => {
-    const stored =
-      getItem<AttractionsProduct[]>(ACTIVITIES_ITINERARY_STORAGE_KEY);
-
-    if (stored && Array.isArray(stored)) {
-      setActivities(stored);
-    }
-  }, [getItem]);
+  const [activities, setActivities] = useState<AttractionsProduct[]>(() => {
+    const stored = getItem<AttractionsProduct[]>(
+      ACTIVITIES_ITINERARY_STORAGE_KEY
+    );
+    return Array.isArray(stored) ? stored : [];
+  });
 
   const handleRemoveFromItinerary = (id: string) => {
     const updated = activities.filter((activity) => activity.id !== id);

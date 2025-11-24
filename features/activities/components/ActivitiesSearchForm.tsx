@@ -122,154 +122,175 @@ export default function ActivitiesSearchForm({
     <FormProvider {...form}>
       <form
         onSubmit={onSubmit}
-        className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
+        className="mb-8 rounded-sm bg-neutral-300 p-4 sm:p-5 lg:p-6"
       >
-        <div className="flex flex-col gap-4 md:flex-row">
-          <Controller
-            name="id"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="activities-location"
-                label="Where are you going?"
-                placeholder="Search city, landmark, or attraction"
-                isRequired
-                value={field.value}
-                onChange={field.onChange}
-                options={locationOptions}
-                enableSearch
-                searchValue={locationSearch}
-                onSearchChange={setLocationSearch}
-                isLoading={isLoadingLocationsSearch}
-                emptyStateText={
-                  !locationSearch
-                    ? "Please enter a location"
-                    : "No locations found."
-                }
-                error={errors.id?.message}
-                containerClassName="w-full md:flex-2"
+        <div className="space-y-5 sm:space-y-6">
+          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <h3 className="text-sm font-semibold text-black-primary">
+                Location & dates
+              </h3>
+              <p className="text-xs font-medium text-black-secondary">
+                Search for attractions in a city and when you&apos;d like to
+                visit.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+              <Controller
+                name="id"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="activities-location"
+                    label="Where are you going?"
+                    placeholder="Search city, landmark, or attraction"
+                    isRequired
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={locationOptions}
+                    enableSearch
+                    searchValue={locationSearch}
+                    onSearchChange={setLocationSearch}
+                    isLoading={isLoadingLocationsSearch}
+                    emptyStateText={
+                      !locationSearch
+                        ? "Please enter a location"
+                        : "No locations found."
+                    }
+                    error={errors.id?.message}
+                    containerClassName="w-full"
+                  />
+                )}
               />
-            )}
-          />
 
-          <div className="flex flex-1 gap-4">
-            <InputField
-              id="activities-start-date"
-              label="Start date"
-              containerClassName="h-full"
-              type="date"
-              {...register("startDate")}
-              error={errors.startDate?.message}
-            />
-            <InputField
-              id="activities-end-date"
-              label="End date"
-              containerClassName="h-full"
-              type="date"
-              {...register("endDate")}
-              error={errors.endDate?.message}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4 md:flex-row">
-          <Controller
-            name="sortBy"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="activities-sort-by"
-                label="Sort by"
-                placeholder="Select sort by"
-                value={field.value}
-                onChange={field.onChange}
-                options={ACTIVITIES_SORT_OPTIONS}
-                containerClassName="md:flex-[2]"
-              />
-            )}
-          />
-
-          <div className="flex flex-1 gap-4">
-            <Controller
-              name="currency_code"
-              control={control}
-              render={({ field }) => (
-                <CurrencyField value={field.value} onChange={field.onChange} />
-              )}
-            />
-
-            <Controller
-              name="languagecode"
-              control={control}
-              render={({ field }) => (
-                <SelectField
-                  id="activities-language"
-                  label="Language"
-                  value={field.value}
-                  placeholder="Select language"
-                  onChange={field.onChange}
-                  options={
-                    languages?.data
-                      ? languages.data.map((language) => ({
-                          label: language.name,
-                          value: language.code,
-                        }))
-                      : []
-                  }
-                  isLoading={isLoadingLanguages}
+              <div className="grid gap-4 md:grid-cols-2">
+                <InputField
+                  id="activities-start-date"
+                  label="Start date"
+                  containerClassName="h-full"
+                  type="date"
+                  {...register("startDate")}
+                  error={errors.startDate?.message}
                 />
-              )}
-            />
-          </div>
-        </div>
+                <InputField
+                  id="activities-end-date"
+                  label="End date"
+                  containerClassName="h-full"
+                  type="date"
+                  {...register("endDate")}
+                  error={errors.endDate?.message}
+                />
+              </div>
+            </div>
+          </section>
 
-        <div className="flex items-center justify-between gap-2 border-t border-neutral-500/40 pt-4">
+          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <h3 className="text-sm font-semibold text-black-primary">
+                Sorting & language
+              </h3>
+              <p className="text-xs font-medium text-black-secondary">
+                Control how results are ordered and which language/prices you
+                see.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <Controller
+                name="sortBy"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="activities-sort-by"
+                    label="Sort by"
+                    placeholder="Select sort by"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={ACTIVITIES_SORT_OPTIONS}
+                    containerClassName="w-full"
+                  />
+                )}
+              />
+
+              <Controller
+                name="currency_code"
+                control={control}
+                render={({ field }) => (
+                  <CurrencyField
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+
+              <Controller
+                name="languagecode"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="activities-language"
+                    label="Language"
+                    value={field.value}
+                    placeholder="Select language"
+                    onChange={field.onChange}
+                    options={
+                      languages?.data
+                        ? languages.data.map((language) => ({
+                            label: language.name,
+                            value: language.code,
+                          }))
+                        : []
+                    }
+                    isLoading={isLoadingLanguages}
+                  />
+                )}
+              />
+            </div>
+          </section>
+
           {locations?.data && (
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black-secondary"
-              onClick={() => setShowAdvancedFilters((prev) => !prev)}
-              aria-expanded={showAdvancedFilters}
-              aria-controls="activities-advanced-filters"
-            >
-              <CaretUpDownIcon className="size-4" />
-              Advanced filters
-            </button>
+            <div className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+              <div className="flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black-secondary"
+                  onClick={() => setShowAdvancedFilters((prev) => !prev)}
+                  aria-expanded={showAdvancedFilters}
+                  aria-controls="activities-advanced-filters"
+                >
+                  <CaretUpDownIcon className="size-4" />
+                  Advanced filters
+                </button>
+              </div>
+
+              {showAdvancedFilters && <AdvancedFilters response={locations} />}
+            </div>
           )}
-
-          <div className="flex gap-3 ml-auto">
-            <Button
-              type="button"
-              variant="tertiary"
-              size="md"
-              onClick={clearAdvancedFilters}
-              className="hover:underline"
-            >
-              Reset filters
-            </Button>
-
-            <Button
-              type="button"
-              variant="tertiary"
-              size="md"
-              onClick={handleReset}
-              className="hover:underline"
-            >
-              Reset form
-            </Button>
-
-            <Button
-              type="submit"
-              variant="primary"
-              size="md"
-              isLoading={isLoadingLocations}
-            >
-              Search activities
-            </Button>
-          </div>
         </div>
+        <div className="mt-4 flex items-center justify-end gap-3 border-t border-neutral-500/40 pt-4">
+          <Button
+            type="button"
+            variant="tertiary"
+            size="md"
+            onClick={() => {
+              clearAdvancedFilters();
+              handleReset();
+            }}
+            className="hover:underline"
+          >
+            Reset
+          </Button>
 
-        {showAdvancedFilters && <AdvancedFilters response={locations} />}
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            isLoading={isLoadingLocations}
+          >
+            Search activities
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );

@@ -114,156 +114,191 @@ export default function FlightsSearchForm({
     <FormProvider {...form}>
       <form
         onSubmit={onSubmit}
-        className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
+        className="mb-8 rounded-sm bg-neutral-300 p-4 sm:p-5 lg:p-6"
       >
-        <div className="flex flex-col gap-4 md:flex-row">
-          <Controller
-            name="fromId"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="flights-from"
-                label="From"
+        <div className="space-y-5 sm:space-y-6">
+          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <h3 className="text-sm font-semibold text-black-primary">
+                Route & dates
+              </h3>
+              <p className="text-xs font-medium text-black-secondary">
+                Pick your departure, arrival and travel dates.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <Controller
+                name="fromId"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="flights-from"
+                    label="From"
+                    isRequired
+                    placeholder="Departure airport or city"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={fromOptions}
+                    enableSearch
+                    searchValue={fromQuery}
+                    onSearchChange={setFromQuery}
+                    isLoading={isLoadingFrom}
+                    error={errors.fromId?.message}
+                    containerClassName="w-full"
+                  />
+                )}
+              />
+
+              <Controller
+                name="toId"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="flights-to"
+                    label="To"
+                    isRequired
+                    placeholder="Arrival airport or city"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={toOptions}
+                    enableSearch
+                    searchValue={toQuery}
+                    onSearchChange={setToQuery}
+                    isLoading={isLoadingTo}
+                    error={errors.toId?.message}
+                    containerClassName="w-full"
+                  />
+                )}
+              />
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <InputField
+                id="flights-depart-date"
+                label="Departure date"
+                type="date"
                 isRequired
-                placeholder="Departure airport or city"
-                value={field.value}
-                onChange={field.onChange}
-                options={fromOptions}
-                enableSearch
-                searchValue={fromQuery}
-                onSearchChange={setFromQuery}
-                isLoading={isLoadingFrom}
-                error={errors.fromId?.message}
-                containerClassName="w-full md:flex-1"
+                {...form.register("departDate")}
+                error={errors.departDate?.message}
               />
-            )}
-          />
+              <InputField
+                id="flights-return-date"
+                label="Return date"
+                type="date"
+                {...form.register("returnDate")}
+                error={errors.returnDate?.message}
+              />
+            </div>
+          </section>
 
-          <Controller
-            name="toId"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="flights-to"
-                label="To"
-                isRequired
-                placeholder="Arrival airport or city"
-                value={field.value}
-                onChange={field.onChange}
-                options={toOptions}
-                enableSearch
-                searchValue={toQuery}
-                onSearchChange={setToQuery}
-                isLoading={isLoadingTo}
-                error={errors.toId?.message}
-                containerClassName="w-full md:flex-1"
+          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <h3 className="text-sm font-semibold text-black-primary">
+                Passengers & cabin
+              </h3>
+              <p className="text-xs font-medium text-black-secondary">
+                Tell us who&apos;s flying and which cabin you prefer.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <InputField
+                id="flights-adults"
+                label="Adults"
+                type="number"
+                inputMode="tel"
+                min={1}
+                placeholder="Number of adults"
+                {...form.register("adults")}
+                error={errors.adults?.message}
               />
-            )}
-          />
+              <InputField
+                id="flights-children"
+                label="Children"
+                type="number"
+                inputMode="tel"
+                placeholder="e.g. 0-17"
+                {...form.register("children")}
+                error={errors.children?.message}
+              />
+              <Controller
+                name="cabinClass"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="flights-cabin-class"
+                    label="Cabin class"
+                    placeholder="Any cabin"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={FLIGHTS_CABIN_CLASS_OPTIONS}
+                    error={errors.cabinClass?.message}
+                    containerClassName="w-full"
+                  />
+                )}
+              />
+            </div>
+          </section>
+
+          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <h3 className="text-sm font-semibold text-black-primary">
+                Sorting & filters
+              </h3>
+              <p className="text-xs font-medium text-black-secondary">
+                Optional settings to fine-tune your search results.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3 border-t border-neutral-500/40 pt-4 md:pt-4">
+              <Controller
+                name="sort"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="flights-sort"
+                    label="Sort by"
+                    placeholder="Best"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={FLIGHTS_SORT_OPTIONS}
+                    error={errors.sort?.message}
+                    containerClassName="w-full"
+                  />
+                )}
+              />
+              <Controller
+                name="stops"
+                control={control}
+                render={({ field }) => (
+                  <SelectField
+                    id="flights-stops"
+                    label="Stops"
+                    placeholder="No preference"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={FLIGHTS_STOPS_OPTIONS}
+                    error={errors.stops?.message}
+                    containerClassName="w-full"
+                  />
+                )}
+              />
+              <Controller
+                name="currency_code"
+                control={control}
+                render={({ field }) => (
+                  <CurrencyField
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+            </div>
+          </section>
         </div>
 
-        <div className="flex flex-col gap-4 md:flex-row">
-          <InputField
-            id="flights-depart-date"
-            label="Departure date"
-            type="date"
-            isRequired
-            {...form.register("departDate")}
-            error={errors.departDate?.message}
-          />
-          <InputField
-            id="flights-return-date"
-            label="Return date"
-            type="date"
-            {...form.register("returnDate")}
-            error={errors.returnDate?.message}
-          />
-        </div>
-
-        <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-          <InputField
-            id="flights-adults"
-            label="Adults"
-            type="number"
-            inputMode="tel"
-            min={1}
-            placeholder="Number of adults"
-            {...form.register("adults")}
-            error={errors.adults?.message}
-          />
-          <InputField
-            id="flights-children"
-            label="Children"
-            type="number"
-            inputMode="tel"
-            placeholder="e.g. 0-17"
-            {...form.register("children")}
-            error={errors.children?.message}
-          />
-          <Controller
-            name="cabinClass"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="flights-cabin-class"
-                label="Cabin class"
-                placeholder="Any cabin"
-                value={field.value}
-                onChange={field.onChange}
-                options={FLIGHTS_CABIN_CLASS_OPTIONS}
-                error={errors.cabinClass?.message}
-                containerClassName="w-full"
-              />
-            )}
-          />
-        </div>
-
-        <div className="flex flex-col gap-4 border-t border-neutral-500/40 pt-4 md:grid md:grid-cols-3">
-          <Controller
-            name="sort"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="flights-sort"
-                label="Sort by"
-                placeholder="Best"
-                value={field.value}
-                onChange={field.onChange}
-                options={FLIGHTS_SORT_OPTIONS}
-                error={errors.sort?.message}
-                containerClassName="w-full"
-              />
-            )}
-          />
-          <Controller
-            name="stops"
-            control={control}
-            render={({ field }) => (
-              <SelectField
-                id="flights-stops"
-                label="Stops"
-                placeholder="No preference"
-                value={field.value}
-                onChange={field.onChange}
-                options={FLIGHTS_STOPS_OPTIONS}
-                error={errors.stops?.message}
-                containerClassName="w-full"
-              />
-            )}
-          />
-          <Controller
-            name="currency_code"
-            control={control}
-            render={({ field }) => (
-              <CurrencyField
-                value={field.value || ""}
-                onChange={field.onChange}
-              />
-            )}
-          />
-        </div>
-
-        <div className="flex items-center justify-end gap-3 pt-4">
+        <div className="mt-4 flex items-center justify-end gap-3 border-t border-neutral-500/40 pt-4">
           <Button
             type="button"
             variant="tertiary"

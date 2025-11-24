@@ -1,6 +1,6 @@
- "use client";
+"use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import ItineraryCategorySection from "./ItineraryCategorySection";
 import ItineraryEmptyState from "./ItineraryEmptyState";
@@ -11,16 +11,10 @@ import { HOTELS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 
 export default function HotelItinerary() {
   const { getItem, setItem } = useLocalStorage();
-  const [hotels, setHotels] = useState<SearchHotelsHotel[]>([]);
-
-  useEffect(() => {
-    const stored =
-      getItem<SearchHotelsHotel[]>(HOTELS_ITINERARY_STORAGE_KEY);
-
-    if (stored && Array.isArray(stored)) {
-      setHotels(stored);
-    }
-  }, [getItem]);
+  const [hotels, setHotels] = useState<SearchHotelsHotel[]>(() => {
+    const stored = getItem<SearchHotelsHotel[]>(HOTELS_ITINERARY_STORAGE_KEY);
+    return Array.isArray(stored) ? stored : [];
+  });
 
   const handleRemoveFromItinerary = (id: number) => {
     const updated = hotels.filter((hotel) => hotel.hotel_id !== id);
