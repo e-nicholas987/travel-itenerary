@@ -314,7 +314,7 @@ export default function FlightsSearchForm({
             variant="tertiary"
             size="md"
             onClick={handleReset}
-            className="hover:underline"
+            className="hover:underline w-full sm:w-auto"
           >
             Reset
           </Button>
@@ -324,6 +324,7 @@ export default function FlightsSearchForm({
             variant="primary"
             size="md"
             isLoading={isLoadingFlights}
+            className="w-full sm:w-auto"
           >
             Search flights
           </Button>

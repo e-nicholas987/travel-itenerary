@@ -380,7 +380,7 @@ export default function HotelsSearchForm({
           variant="tertiary"
           size="md"
           onClick={handleReset}
-          className="hover:underline"
+          className="hover:underline w-full sm:w-auto"
         >
           Reset
         </Button>
@@ -390,6 +390,7 @@ export default function HotelsSearchForm({
           variant="primary"
           size="md"
           isLoading={isLoadingHotels}
+          className="w-full sm:w-auto"
         >
           Search hotels
         </Button>
