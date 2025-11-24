@@ -108,7 +108,7 @@ export default function FlightCard({
   return (
     <article
       className={cn("rounded-sm overflow-hidden bg-white", {
-        "grid grid-cols-[1fr_auto]": !isSearchResult,
+        "grid sm:grid-cols-[1fr_auto]": !isSearchResult,
         "border border-neutral-200 shadow-sm": isSearchResult,
       })}
     >

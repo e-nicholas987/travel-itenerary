@@ -78,7 +78,7 @@ export default function HotelCard({
     <article
       className={cn(
         "rounded-sm overflow-hidden border border-neutral-200 shadow-sm",
-        !isSearchResult && "grid grid-cols-[1fr_auto]"
+        !isSearchResult && "grid sm:grid-cols-[1fr_auto]"
       )}
     >
       <div className="flex flex-col gap-4 bg-white p-4 sm:flex-row sm:gap-6 sm:p-6 sm:pr-0">
