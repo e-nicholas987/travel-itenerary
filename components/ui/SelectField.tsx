@@ -106,7 +106,7 @@ export default function SelectField({
           aria-describedby={error ? `${id}-error` : undefined}
           className="text-left whitespace-nowrap truncate"
         >
-          <SelectValue placeholder={isLoading ? "Loading" : placeholder} />
+          <SelectValue placeholder={isLoading ? "Loading..." : placeholder} />
         </SelectTrigger>
 
         <SelectContent hideTopScrollbar={enableSearch} className="pt-0">
@@ -126,7 +126,7 @@ export default function SelectField({
           )}
 
           {isLoading ? (
-            <div className="px-4 py-3 text-sm text-black-secondary">
+            <div className="px-4 py-8 text-sm text-black-secondary">
               Loading...
             </div>
           ) : filteredOptions.length === 0 && emptyStateText ? (
