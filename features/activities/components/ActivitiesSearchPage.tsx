@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
-import { ArrowLeftIcon, ListChecksIcon } from "@/components/ui/icons";
+import { ListChecksIcon } from "@/components/ui/icons";
 import { ROUTES } from "@/constants/routes";
 import type { SearchAttractionsParams } from "@/features/activities/types";
 import { useSearchAttractions } from "../hooks/useSearchAttractions";
@@ -11,6 +10,7 @@ import ActivitiesCard from "./ActivitiesCard";
 import AddActivitiesForm from "./AddActivitiesForm";
 import { getApiError } from "@/lib/utils/getApiError";
 import ErrorBanner from "@/components/shared/ErrorBanner";
+import PageHeaderWithBack from "@/components/shared/PageHeader";
 
 export default function ActivitiesSearchPage() {
   const [searchParams, setSearchParams] =
@@ -35,26 +35,13 @@ export default function ActivitiesSearchPage() {
 
   return (
     <section className="flex-1 rounded-sm bg-white p-8">
-      <header className="mb-8 flex flex-col gap-4 border-b border-neutral-300 pb-6">
-        <div className="flex items-center justify-between gap-4">
-          <Link
-            href={ROUTES.PLAN_TRIP}
-            className="inline-flex items-center gap-2 text-sm font-medium text-black-secondary transition-colors hover:text-primary-600"
-          >
-            <ArrowLeftIcon className="size-5" />
-            Back to trip itineraries
-          </Link>
-        </div>
-
-        <h1 className="flex items-center gap-2 text-xl font-semibold leading-7 tracking-[-0.02em] md:text-2xl">
-          <ListChecksIcon className="size-6 text-primary-600" />
-          Search activities
-        </h1>
-        <p className="mt-1 text-sm font-medium text-black-secondary">
-          Find tours and attractions for your trip and add them to your
-          itinerary.
-        </p>
-      </header>
+      <PageHeaderWithBack
+        backHref={ROUTES.PLAN_TRIP}
+        backLabel="Back to trip itineraries"
+        title="Search activities"
+        description="Find tours and attractions for your trip and add them to your itinerary."
+        icon={ListChecksIcon}
+      />
 
       {errorMessage && <ErrorBanner message={errorMessage} />}
 
