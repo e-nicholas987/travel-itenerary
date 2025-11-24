@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
 import { Button, InputField, SelectField } from "@/components/ui";
-import { Form } from "@/components/ui/form";
+import { FormProvider } from "react-hook-form";
 import { useDebounce } from "@/hooks/useDebounce";
 import type { SelectOption } from "@/types/common";
 
@@ -111,7 +111,7 @@ export default function FlightsSearchForm({
   };
 
   return (
-    <Form {...form}>
+    <FormProvider {...form}>
       <form
         onSubmit={onSubmit}
         className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
@@ -284,6 +284,6 @@ export default function FlightsSearchForm({
           </Button>
         </div>
       </form>
-    </Form>
+    </FormProvider>
   );
 }

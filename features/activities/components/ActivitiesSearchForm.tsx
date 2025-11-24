@@ -2,10 +2,9 @@ import type React from "react";
 import { useMemo, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 
 import { Button, InputField, SelectField } from "@/components/ui";
-import { Form } from "@/components/ui/form";
 import { CaretUpDownIcon } from "@/components/ui/icons";
 import CurrencyField from "@/components/shared/CurrencyField";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -120,7 +119,7 @@ export default function ActivitiesSearchForm({
   };
 
   return (
-    <Form {...form}>
+    <FormProvider {...form}>
       <form
         onSubmit={onSubmit}
         className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
@@ -272,6 +271,6 @@ export default function ActivitiesSearchForm({
 
         {showAdvancedFilters && <AdvancedFilters response={locations} />}
       </form>
-    </Form>
+    </FormProvider>
   );
 }

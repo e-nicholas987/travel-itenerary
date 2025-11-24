@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu } from "lucide-react";
@@ -6,9 +8,12 @@ import Link from "next/link";
 import type { NavItem } from "./types";
 import { ROUTES } from "@/constants/routes";
 import { buttonVariants } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
+import { useActiveRoute } from "@/hooks";
 
 export default function HamburgerMenu({ items }: { items: NavItem[] }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const isActiveRoute = useActiveRoute();
 
   const closeMenu = () => setIsOpen(false);
 
@@ -41,12 +46,18 @@ export default function HamburgerMenu({ items }: { items: NavItem[] }) {
               transition={{ type: "spring", stiffness: 360, damping: 36 }}
               onClick={(event) => event.stopPropagation()}
             >
-              <nav className="space-y-5">
+              <nav className="space-y-2">
                 {items.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium text-black-secondary hover:bg-neutral-300/60"
+                    className={cn(
+                      "flex items-center gap-3 rounded-sm px-3 py-4 text-sm font-medium text-black-secondary",
+
+                      isActiveRoute(item.href)
+                        ? "bg-primary-600/10"
+                        : " hover:bg-neutral-300/60"
+                    )}
                     onClick={closeMenu}
                   >
                     <item.Icon className="size-5 text-neutral-700" />
