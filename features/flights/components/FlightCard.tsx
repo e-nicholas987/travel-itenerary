@@ -20,7 +20,7 @@ import {
   AirplaneTakeOffIcon,
   AirplaneLandingIcon,
 } from "@/components/ui/icons";
-import { formatDurationMs } from "../utils/formateDurationMs";
+import { formatDuration } from "../utils/formateDuration";
 
 const FACILITIES: ReadonlyArray<{ icon: LucideIcon; label: string }> = [
   { icon: LuggageIcon, label: "Baggage: 20kg, Cabin Baggage: 8kg" },
@@ -66,10 +66,6 @@ export default function FlightCard({
   const firstSegment = offer.segments[0];
   const firstLeg = firstSegment?.legs[0];
 
-  console.log(firstSegment);
-
-  if (!firstLeg) return null;
-
   const carrier = firstLeg.carriersData[0];
   const departureAirport = firstSegment.departureAirport;
   const arrivalAirport = firstSegment.arrivalAirport;
@@ -95,8 +91,6 @@ export default function FlightCard({
       day: "numeric",
       month: "short",
     });
-
-  const totalDurationMinutes = firstSegment.totalTime ?? 0;
 
   const totalPrice = offer.priceBreakdown.total;
   const formattedPrice = formatCurrency({
@@ -163,7 +157,9 @@ export default function FlightCard({
             <div className="flex flex-col items-center w-full max-w-[200px]">
               <div className="flex justify-between w-full text-xs font-medium text-black-secondary mb-1">
                 <AirplaneTakeOffIcon className="text-neutral-800" />
-                <span>Duration: {formatDurationMs(totalDurationMinutes)}</span>
+                <span>
+                  Duration: {formatDuration(firstSegment.totalTime ?? 0)}
+                </span>
                 <AirplaneLandingIcon className="text-neutral-800" />
               </div>
               <div className="relative w-full h-1.5 bg-blue-100 rounded-full overflow-hidden">

@@ -9,7 +9,19 @@ export const flightsSearchSchema = z
     departDate: requiredString("Departure date is required"),
     returnDate: nonRequiredString,
     adults: nonRequiredString,
-    children: nonRequiredString,
+    children: nonRequiredString.refine(
+      (value) => {
+        if (!value) return true;
+
+        const num = Number(value);
+        if (Number.isNaN(num)) return false;
+
+        return num >= 1 && num <= 17;
+      },
+      {
+        message: "Children age must be between 0 and 17",
+      }
+    ),
     cabinClass: nonRequiredString,
     sort: nonRequiredString,
     stops: nonRequiredString,
@@ -73,5 +85,3 @@ export const flightsSearchSchema = z
   );
 
 export type FlightsSearchFormValues = z.infer<typeof flightsSearchSchema>;
-
-

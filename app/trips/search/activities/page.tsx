@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ActivitiesSearchPage from "@/features/activities/components/ActivitiesSearchPage";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Search activities",
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function ActivitiesPage() {
-  return (
-    <Suspense>
-      <ActivitiesSearchPage />
-    </Suspense>
-  );
+  return <ActivitiesSearchPage />;
 }

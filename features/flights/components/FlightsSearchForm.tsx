@@ -196,7 +196,7 @@ export default function FlightsSearchForm({
             label="Children"
             type="number"
             inputMode="tel"
-            placeholder="e.g. 0,5,12"
+            placeholder="e.g. 0-17"
             {...form.register("children")}
             error={errors.children?.message}
           />

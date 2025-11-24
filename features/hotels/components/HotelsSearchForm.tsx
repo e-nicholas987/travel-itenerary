@@ -228,6 +228,8 @@ export default function HotelsSearchForm({
         <InputField
           id="hotels-children-age"
           label="Children ages"
+          type="number"
+          inputMode="tel"
           placeholder="e.g. 0-17"
           {...register("children_age")}
           error={errors.children_age?.message}

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import FlightsSearchPage from "@/features/flights/components/FlightsSearchPage";
 
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function FlightsPage() {
-  return (
-    <Suspense>
-      <FlightsSearchPage />
-    </Suspense>
-  );
+  return <FlightsSearchPage />;
 }

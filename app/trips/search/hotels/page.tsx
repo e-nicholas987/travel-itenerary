@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import HotelsSearchPage from "@/features/hotels/components/HotelsSearchPage";
 
@@ -10,9 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function HotelsPage() {
-  return (
-    <Suspense>
-      <HotelsSearchPage />
-    </Suspense>
-  );
+  return <HotelsSearchPage />;
 }
