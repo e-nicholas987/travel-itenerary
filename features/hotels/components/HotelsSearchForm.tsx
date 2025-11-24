@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 
 import { Button, InputField, SelectField } from "@/components/ui";
@@ -10,8 +12,9 @@ import {
   HotelsSearchFormValues,
   hotelsSearchSchema,
 } from "../validation/hotelsSearchSchema";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { capitalizeFirstLetter } from "@/lib/utils/stringHelper";
 
 type HotelsSearchFormProps = {
   onSearch: (params: SearchHotelsParams) => void;
@@ -50,7 +53,7 @@ export default function HotelsSearchForm({
     handleSubmit,
     reset,
     setValue,
-    getValues,
+    control,
     formState: { errors },
   } = useForm<HotelsSearchFormValues>({
     resolver: zodResolver(hotelsSearchSchema),
@@ -137,12 +140,18 @@ export default function HotelsSearchForm({
   );
 
   const searchTypeOptions = useMemo(() => {
-    return (
-      destinations?.data?.map((destination) => ({
-        label: destination.search_type,
-        value: destination.search_type,
-      })) ?? []
-    );
+    const seen = new Set<string>();
+    const options: { label: string; value: string }[] = [];
+
+    destinations?.data?.forEach((destination) => {
+      const type = destination.search_type;
+      if (type && !seen.has(type)) {
+        seen.add(type);
+        options.push({ label: capitalizeFirstLetter(type), value: type });
+      }
+    });
+
+    return options;
   }, [destinations]);
 
   return (
@@ -151,32 +160,43 @@ export default function HotelsSearchForm({
       className="mb-8 space-y-5 rounded-sm bg-neutral-300 p-5"
     >
       <div className="flex flex-col gap-4 md:flex-row">
-        <SelectField
-          id="hotels-destination"
-          label="Where are you going?"
-          isRequired
-          placeholder="Search city, landmark, or attraction"
-          value={getValues("dest_id")}
-          onChange={(value) => setValue("dest_id", value)}
-          options={destinationOptions}
-          enableSearch
-          searchValue={destinationSearchTerm}
-          onSearchChange={setDestinationSearchTerm}
-          isLoading={isLoadingDestinations}
-          error={errors.dest_id?.message}
-          containerClassName="w-full md:flex-2"
+        <Controller
+          name="dest_id"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              id="hotels-destination"
+              label="Where are you going?"
+              isRequired
+              placeholder="Search city, landmark, or attraction"
+              value={field.value}
+              onChange={field.onChange}
+              options={destinationOptions}
+              enableSearch
+              searchValue={destinationSearchTerm}
+              onSearchChange={setDestinationSearchTerm}
+              isLoading={isLoadingDestinations}
+              error={errors.dest_id?.message}
+              containerClassName="w-full md:flex-2"
+            />
+          )}
         />
-
-        <SelectField
-          id="hotels-search-type"
-          label="Search type"
-          isRequired
-          placeholder="Select search type"
-          value={getValues("search_type")}
-          containerClassName="w-full md:flex-1"
-          onChange={(value) => setValue("search_type", value)}
-          options={searchTypeOptions}
-          error={errors.search_type?.message}
+        <Controller
+          name="search_type"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              id="hotels-search-type"
+              label="Search type"
+              isRequired
+              placeholder="Select search type"
+              value={field.value}
+              containerClassName="w-full md:flex-1"
+              onChange={field.onChange}
+              options={searchTypeOptions}
+              error={errors.search_type?.message}
+            />
+          )}
         />
       </div>
 
@@ -230,26 +250,38 @@ export default function HotelsSearchForm({
       </div>
 
       <div className="flex flex-col gap-4 md:flex-row">
-        <SelectField
-          id="hotels-currency"
-          label="Currency"
-          placeholder="Select currency"
-          value={getParam("currency_code")}
-          onChange={(value) => setValue("currency_code", value)}
-          options={currencyOptions}
-          isLoading={isLoadingCurrencies}
-          error={errors.currency_code?.message}
+        <Controller
+          name="currency_code"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              id="hotels-currency"
+              label="Currency"
+              placeholder="Select currency"
+              value={field.value}
+              onChange={field.onChange}
+              options={currencyOptions}
+              isLoading={isLoadingCurrencies}
+              error={errors.currency_code?.message}
+            />
+          )}
         />
 
-        <SelectField
-          id="hotels-language"
-          label="Language"
-          placeholder="Select language"
-          value={getParam("languagecode")}
-          onChange={(value) => setValue("languagecode", value)}
-          options={languageOptions}
-          isLoading={isLoadingLanguages}
-          error={errors.languagecode?.message}
+        <Controller
+          name="languagecode"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              id="hotels-language"
+              label="Language"
+              placeholder="Select language"
+              value={field.value}
+              onChange={field.onChange}
+              options={languageOptions}
+              isLoading={isLoadingLanguages}
+              error={errors.languagecode?.message}
+            />
+          )}
         />
 
         <InputField
@@ -263,24 +295,36 @@ export default function HotelsSearchForm({
       </div>
 
       <div className="flex flex-col gap-4 md:flex-row border-t border-neutral-500/40 pt-4">
-        <SelectField
-          id="hotels-units"
-          label="Units"
-          placeholder="Select units"
-          value={getParam("units")}
-          onChange={(value) => setValue("units", value)}
-          options={unitOptions}
-          error={errors.units?.message}
+        <Controller
+          name="units"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              id="hotels-units"
+              label="Units"
+              placeholder="Select units"
+              value={field.value}
+              onChange={field.onChange}
+              options={unitOptions}
+              error={errors.units?.message}
+            />
+          )}
         />
 
-        <SelectField
-          id="hotels-temperature-unit"
-          label="Temperature unit"
-          placeholder="Select temperature unit"
-          value={getParam("temperature_unit")}
-          onChange={(value) => setValue("temperature_unit", value)}
-          options={temperatureUnitOptions}
-          error={errors.temperature_unit?.message}
+        <Controller
+          name="temperature_unit"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              id="hotels-temperature-unit"
+              label="Temperature unit"
+              placeholder="Select temperature unit"
+              value={field.value}
+              onChange={field.onChange}
+              options={temperatureUnitOptions}
+              error={errors.temperature_unit?.message}
+            />
+          )}
         />
 
         <InputField
