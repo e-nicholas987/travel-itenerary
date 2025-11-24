@@ -126,7 +126,7 @@ export default function SelectField({
           )}
 
           {isLoading ? (
-            <div className="px-4 py-8 text-sm text-black-secondary">
+            <div className="px-4 text-center py-8 text-sm text-black-secondary">
               Loading...
             </div>
           ) : filteredOptions.length === 0 && emptyStateText ? (
