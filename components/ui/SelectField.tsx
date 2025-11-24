@@ -93,59 +93,58 @@ export default function SelectField({
         className={!label ? "sr-only" : undefined}
       />
 
-      <div className="relative w-full h-full">
-        <Select
-          value={value ?? ""}
-          defaultValue={defaultValue}
-          onValueChange={handleValueChange}
-          onOpenChange={handleOpenChange}
-          {...selectProps}
+      <Select
+        value={value ?? ""}
+        defaultValue={defaultValue}
+        onValueChange={handleValueChange}
+        onOpenChange={handleOpenChange}
+        {...selectProps}
+      >
+        <SelectTrigger
+          id={id}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : undefined}
         >
-          <SelectTrigger
-            id={id}
-            aria-invalid={!!error}
-            aria-describedby={error ? `${id}-error` : undefined}
-          >
-            <SelectValue
-              className="text-left whitespace-nowrap truncate"
-              placeholder={isLoading ? "Loading" : placeholder}
-            />
-          </SelectTrigger>
+          <SelectValue
+            className="text-left whitespace-nowrap truncate"
+            placeholder={isLoading ? "Loading" : placeholder}
+          />
+        </SelectTrigger>
 
-          <SelectContent hideTopScrollbar={enableSearch} className="pt-0">
-            {enableSearch && (
-              <div className="sticky top-0 z-10 border-b border-neutral-200 bg-white px-2 pb-2 pt-2">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={searchValue}
-                  onChange={(event) => {
-                    onSearchChange?.(event.target.value);
-                  }}
-                  placeholder="Search..."
-                  className="h-8 w-full rounded-sm border border-primary-1100 px-2 text-xs text-black outline-none transition-shadow focus:border-primary-600 focus:bg-white focus:ring-2 focus:ring-primary-600/30"
-                />
-              </div>
-            )}
+        <SelectContent hideTopScrollbar={enableSearch} className="pt-0">
+          {enableSearch && (
+            <div className="sticky top-0 z-10 border-b border-neutral-200 bg-white px-2 pb-2 pt-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={searchValue}
+                onChange={(event) => {
+                  onSearchChange?.(event.target.value);
+                }}
+                placeholder="Search..."
+                className="h-8 w-full rounded-sm border border-primary-1100 px-2 text-xs text-black outline-none transition-shadow focus:border-primary-600 focus:bg-white focus:ring-2 focus:ring-primary-600/30"
+              />
+            </div>
+          )}
 
-            {isLoading ? (
-              <div className="px-4 py-3 text-sm text-black-secondary">
-                Loading...
-              </div>
-            ) : filteredOptions.length === 0 && emptyStateText ? (
-              <div className="px-4 py-3 text-black-secondary text-center text-sm">
-                {emptyStateText}
-              </div>
-            ) : (
-              filteredOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value.toString()}>
-                  {option.label}
-                </SelectItem>
-              ))
-            )}
-          </SelectContent>
-        </Select>
-      </div>
+          {isLoading ? (
+            <div className="px-4 py-3 text-sm text-black-secondary">
+              Loading...
+            </div>
+          ) : filteredOptions.length === 0 && emptyStateText ? (
+            <div className="px-4 py-3 text-black-secondary text-center text-sm">
+              {emptyStateText}
+            </div>
+          ) : (
+            filteredOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value.toString()}>
+                {option.label}
+              </SelectItem>
+            ))
+          )}
+        </SelectContent>
+      </Select>
+
       {error && <p className="text-red-700 text-xs mt-1">{error}</p>}
     </div>
   );

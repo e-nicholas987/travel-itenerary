@@ -4,8 +4,8 @@ import { nonRequiredString, requiredString } from "@/lib/utils/zodHelpers";
 
 export const flightsSearchSchema = z
   .object({
-    fromId: requiredString("From is required"),
-    toId: requiredString("To is required"),
+    fromId: requiredString("Departure airport or city is required"),
+    toId: requiredString("Arrival airport or city is required"),
     departDate: requiredString("Departure date is required"),
     returnDate: nonRequiredString,
     adults: nonRequiredString,
