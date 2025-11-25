@@ -73,7 +73,7 @@ export default function Topbar() {
             id="topbar-search"
             placeholder="Search"
             containerClassName="h-full max-w-100 hidden xl:block"
-            inputClassName="h-full border-none bg-neutral-300 pl-11"
+            inputClassName="h-full border-transparent hover: bg-neutral-300 pl-11"
             icon={
               <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-6 -translate-y-1/2 text-neutral-700" />
             }
