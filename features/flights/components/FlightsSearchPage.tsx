@@ -18,11 +18,7 @@ import { getApiError } from "@/lib/utils/getApiError";
 import { searchFlights } from "../api/flightServices";
 import FlightCard from "./FlightCard";
 import FlightsSearchForm from "./FlightsSearchForm";
-import type {
-  SearchFlightsData,
-  SearchFlightsParams,
-  SearchFlightsResponse,
-} from "../types";
+import type { SearchFlightsData, SearchFlightsParams } from "../types";
 
 export default function FlightsSearchPage() {
   const [searchedFlights, setSearchedFlights] = useState<
@@ -34,6 +30,7 @@ export default function FlightsSearchPage() {
     mutate: searchFlightsMutation,
     isPending: isLoadingFlights,
     error: searchFlightsError,
+    data: searchFlightsData,
   } = useMutation({
     mutationFn: searchFlights,
   });
@@ -53,16 +50,12 @@ export default function FlightsSearchPage() {
   };
 
   const errorMessage = useMemo(() => {
-    if (
-      (
-        searchedFlights as SearchFlightsResponse | undefined
-      )?.message?.includes?.("error")
-    ) {
-      return searchFlightsError?.message;
+    if (searchFlightsData?.message.includes("error")) {
+      return searchFlightsData?.message;
     }
 
     return searchFlightsError && getApiError(searchFlightsError);
-  }, [searchedFlights, searchFlightsError]);
+  }, [searchFlightsData?.message, searchFlightsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">

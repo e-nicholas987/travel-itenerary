@@ -28,6 +28,7 @@ export default function HotelsSearchPage() {
     mutate: searchHotelsMutation,
     isPending: isLoadingHotels,
     error: searchHotelsError,
+    data: searchHotelsData,
   } = useMutation({
     mutationFn: searchHotels,
   });
@@ -47,11 +48,11 @@ export default function HotelsSearchPage() {
   };
 
   const errorMessage = useMemo(() => {
-    if (searchHotelsError?.message.includes("error")) {
-      return searchHotelsError?.message;
+    if (searchHotelsData?.message.includes("error")) {
+      return searchHotelsData?.message;
     }
     return searchHotelsError && getApiError(searchHotelsError);
-  }, [searchHotelsError]);
+  }, [searchHotelsData?.message, searchHotelsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">

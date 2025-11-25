@@ -30,6 +30,7 @@ export default function ActivitiesSearchPage() {
     mutate: searchAttractionsMutation,
     isPending: isLoadingActivities,
     error: searchAttractionsError,
+    data: searchAttractionsData,
   } = useMutation({
     mutationFn: searchAttractions,
   });
@@ -48,11 +49,11 @@ export default function ActivitiesSearchPage() {
   };
 
   const errorMessage = useMemo(() => {
-    if (searchAttractionsError?.message.includes("error")) {
-      return searchAttractionsError?.message;
+    if (searchAttractionsData?.message.includes("error")) {
+      return searchAttractionsData?.message;
     }
     return searchAttractionsError && getApiError(searchAttractionsError);
-  }, [searchAttractionsError]);
+  }, [searchAttractionsData?.message, searchAttractionsError]);
 
   return (
     <section className="flex-1 rounded-sm bg-white p-4 sm:p-6 lg:p-8">
