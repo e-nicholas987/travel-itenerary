@@ -13,7 +13,7 @@ function Label({ id, label, isRequired, ...props }: LabelProps) {
       id={id}
       {...props}
       className={cn("block text-xs font-medium leading-8", {
-        "after:ml-0.5 after:text-error-900 after:content-['*']": isRequired,
+        "after:ml-0.5 after:text-red-600 after:content-['*']": isRequired,
       })}
       htmlFor={id}
     >

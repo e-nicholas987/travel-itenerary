@@ -79,7 +79,10 @@ export default function ActivitiesSearchPage() {
       )}
 
       {searchedAttractions && (
-        <section ref={scrollIntoViewRef} className="space-y-4">
+        <section
+          ref={scrollIntoViewRef}
+          className="space-y-4 scroll-mt-(--layout-offset)"
+        >
           <ResultsHeader
             title="Available activities"
             count={searchedAttractions.products.length}

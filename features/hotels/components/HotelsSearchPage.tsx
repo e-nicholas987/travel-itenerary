@@ -77,7 +77,10 @@ export default function HotelsSearchPage() {
       )}
 
       {searchedHotels?.length && (
-        <section ref={scrollIntoViewRef} className="space-y-4">
+        <section
+          ref={scrollIntoViewRef}
+          className="space-y-4 scroll-mt-(--layout-offset)"
+        >
           <ResultsHeader
             title="Available hotels"
             count={searchedHotels.length}

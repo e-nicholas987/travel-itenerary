@@ -88,7 +88,10 @@ export default function FlightsSearchPage() {
       )}
 
       {searchedFlights && (
-        <section ref={scrollIntoViewRef} className="space-y-4">
+        <section
+          ref={scrollIntoViewRef}
+          className="space-y-4 scroll-mt-(--layout-offset)"
+        >
           <ResultsHeader
             title="Available flights"
             count={searchedFlights.flightOffers?.length}
