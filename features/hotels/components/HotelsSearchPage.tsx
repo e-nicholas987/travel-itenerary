@@ -31,8 +31,6 @@ export default function HotelsSearchPage() {
     mutationFn: searchHotels,
   });
 
-  console.log(searchedHotels);
-
   const scrollIntoViewRef = useScrollIntoView<HTMLDivElement>(
     searchedHotels?.length ?? 0
   );

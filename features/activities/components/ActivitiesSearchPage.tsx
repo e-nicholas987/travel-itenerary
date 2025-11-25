@@ -36,8 +36,6 @@ export default function ActivitiesSearchPage() {
     searchedAttractions?.products?.length ?? 0
   );
 
-  console.log(searchedAttractions);
-
   const handleSearch = (params: SearchAttractionsParams) => {
     searchAttractionsMutation(params, {
       onSuccess: (data) => {
