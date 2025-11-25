@@ -1,13 +1,12 @@
-import { useState } from "react";
 import { Button, StarIcon } from "@/components/ui";
 import ImageCarousel from "@/components/shared/ImageCarousel";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import type { SearchHotelsHotel } from "../types";
 import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
-import { useLocalStorage } from "@/hooks";
 import { HOTELS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 import { cn } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
+import { useItineraryItem } from "@/features/activities/hooks/useItenaryItem";
 
 type HotelCardProps = {
   hotel: SearchHotelsHotel;
@@ -34,31 +33,12 @@ export default function HotelCard({
     checkoutDate,
   } = property;
 
-  const { getItem, setItem } = useLocalStorage();
-  const [isInItinerary, setIsInItinerary] = useState(() => {
-    const stored =
-      getItem<SearchHotelsHotel[]>(HOTELS_ITINERARY_STORAGE_KEY) ?? [];
-
-    if (!Array.isArray(stored)) return false;
-
-    return stored.some((item) => item.hotel_id === hotel.hotel_id);
-  });
-
-  const handleToggleItinerary = () => {
-    const stored =
-      getItem<SearchHotelsHotel[]>(HOTELS_ITINERARY_STORAGE_KEY) ?? [];
-
-    const exists = stored.some((item) => item.hotel_id === hotel.hotel_id);
-    const updated = exists
-      ? stored.filter((item) => item.hotel_id !== hotel.hotel_id)
-      : [...stored, hotel];
-
-    const success = setItem(HOTELS_ITINERARY_STORAGE_KEY, updated);
-
-    if (success) {
-      setIsInItinerary(!exists);
-    }
-  };
+  const { isInItinerary, toggleItinerary } =
+    useItineraryItem<SearchHotelsHotel>({
+      storageKey: HOTELS_ITINERARY_STORAGE_KEY,
+      item: hotel,
+      getId: (hotel) => hotel.hotel_id,
+    });
 
   const formattedPrice = priceBreakdown
     ? formatCurrency({
@@ -188,7 +168,7 @@ export default function HotelCard({
                     "bg-error-100 text-error-900 hover:bg-error-100/90"
                 )}
                 type="button"
-                onClick={handleToggleItinerary}
+                onClick={toggleItinerary}
               >
                 {isInItinerary ? "Remove from itinerary" : "Add to itinerary"}
               </Button>

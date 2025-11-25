@@ -13,8 +13,8 @@ export default function NotFound() {
           Page not found
         </h1>
         <p className="text-sm font-medium text-black-secondary">
-          The page you’re looking for doesn’t exist or may have been moved. Check
-          the URL, or return to your trip dashboard.
+          The page you’re looking for doesn’t exist or may have been moved.
+          Check the URL, or return to your trip dashboard.
         </p>
         <div className="flex items-center justify-center gap-3 pt-2">
           <Link
@@ -34,6 +34,3 @@ export default function NotFound() {
     </section>
   );
 }
-
-
-

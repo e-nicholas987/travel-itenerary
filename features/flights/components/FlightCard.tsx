@@ -1,25 +1,24 @@
-import { useState } from "react";
 import Image from "next/image";
 import {
-  PlaneIcon,
   LuggageIcon,
+  PlaneIcon,
+  PlugIcon,
   TvIcon,
   UtensilsIcon,
-  PlugIcon,
   type LucideIcon,
 } from "lucide-react";
 
-import { Button } from "@/components/ui";
-import { formatCurrency } from "@/lib/utils/formatCurrency";
-import { useLocalStorage } from "@/hooks";
-import { FLIGHTS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
 import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
-import { cn } from "@/lib/utils";
-import type { FlightOffer } from "../types";
+import { Button } from "@/components/ui";
 import {
-  AirplaneTakeOffIcon,
   AirplaneLandingIcon,
+  AirplaneTakeOffIcon,
 } from "@/components/ui/icons";
+import { FLIGHTS_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
+import { useItineraryItem } from "@/features/activities/hooks/useItenaryItem";
+import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/formatCurrency";
+import type { FlightOffer } from "../types";
 import { formatDuration } from "../utils/formateDuration";
 
 const FACILITIES: ReadonlyArray<{ icon: LucideIcon; label: string }> = [
@@ -40,16 +39,11 @@ export default function FlightCard({
   isSearchResult = false,
   onRemoveFromItinerary,
 }: FlightCardProps) {
-  const { getItem, setItem } = useLocalStorage();
-
-  const [isInItinerary, setIsInItinerary] = useState(() => {
-    const stored = getItem<FlightOffer[]>(FLIGHTS_ITINERARY_STORAGE_KEY) ?? [];
-    if (Array.isArray(stored)) {
-      return stored.some((item) => item.token === offer.token);
-    }
-    return false;
+  const { isInItinerary, toggleItinerary } = useItineraryItem<FlightOffer>({
+    storageKey: FLIGHTS_ITINERARY_STORAGE_KEY,
+    item: offer,
+    getId: (flight) => flight.token,
   });
-
   const firstSegment = offer.segments[0];
   const firstLeg = firstSegment?.legs[0];
 
@@ -91,19 +85,6 @@ export default function FlightCard({
       day: "numeric",
       month: "short",
     });
-
-  const handleToggleItinerary = () => {
-    const stored = getItem<FlightOffer[]>(FLIGHTS_ITINERARY_STORAGE_KEY) ?? [];
-    const exists = stored.some((item) => item.token === offer.token);
-    const updated = exists
-      ? stored.filter((item) => item.token !== offer.token)
-      : [...stored, offer];
-
-    const success = setItem(FLIGHTS_ITINERARY_STORAGE_KEY, updated);
-    if (success) {
-      setIsInItinerary(!exists);
-    }
-  };
 
   return (
     <article
@@ -244,7 +225,7 @@ export default function FlightCard({
                     "bg-error-100 text-error-900 hover:bg-error-100/90"
                 )}
                 type="button"
-                onClick={handleToggleItinerary}
+                onClick={toggleItinerary}
               >
                 {isInItinerary ? "Remove from itinerary" : "Add to itinerary"}
               </Button>

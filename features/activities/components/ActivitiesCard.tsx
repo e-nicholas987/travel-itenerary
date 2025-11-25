@@ -1,19 +1,18 @@
-import { useState } from "react";
-import type { AttractionsProduct } from "../types";
-
-import { Button, StarIcon } from "@/components/ui";
-import { formatCurrency } from "@/lib/utils/formatCurrency";
-import ImageCarousel from "@/components/shared/ImageCarousel";
 import {
   CircleChevronDown,
   CircleChevronUp,
   Clock,
   MapPin,
 } from "lucide-react";
+
+import ImageCarousel from "@/components/shared/ImageCarousel";
 import RemoveItineraryButton from "@/components/shared/RemoveItineraryButton";
-import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@/hooks";
+import { Button, StarIcon } from "@/components/ui";
+import { useItineraryItem } from "@/features/activities/hooks/useItenaryItem";
 import { ACTIVITIES_ITINERARY_STORAGE_KEY } from "@/constants/storageKeys";
+import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/formatCurrency";
+import type { AttractionsProduct } from "../types";
 
 type ActivitiesCardProps = {
   activity: AttractionsProduct;
@@ -34,31 +33,12 @@ export default function ActivitiesCard({
     reviewsStats,
   } = activity;
 
-  const { getItem, setItem } = useLocalStorage();
-  const [isInItinerary, setIsInItinerary] = useState(() => {
-    const stored =
-      getItem<AttractionsProduct[]>(ACTIVITIES_ITINERARY_STORAGE_KEY) ?? [];
-
-    if (!Array.isArray(stored)) return false;
-
-    return stored.some((item) => item.id === activity.id);
-  });
-
-  const handleToggleItinerary = () => {
-    const stored =
-      getItem<AttractionsProduct[]>(ACTIVITIES_ITINERARY_STORAGE_KEY) ?? [];
-
-    const exists = stored.some((item) => item.id === activity.id);
-    const updated = exists
-      ? stored.filter((item) => item.id !== activity.id)
-      : [...stored, activity];
-
-    const success = setItem(ACTIVITIES_ITINERARY_STORAGE_KEY, updated);
-
-    if (success) {
-      setIsInItinerary(!exists);
-    }
-  };
+  const { isInItinerary, toggleItinerary } =
+    useItineraryItem<AttractionsProduct>({
+      storageKey: ACTIVITIES_ITINERARY_STORAGE_KEY,
+      item: activity,
+      getId: (activity) => activity.id,
+    });
 
   const rating = reviewsStats?.combinedNumericStats.average ?? null;
   const reviewCount = reviewsStats?.combinedNumericStats.total ?? null;
@@ -168,7 +148,7 @@ export default function ActivitiesCard({
                     "bg-error-100 text-error-900 hover:bg-error-100/90"
                 )}
                 type="button"
-                onClick={handleToggleItinerary}
+                onClick={toggleItinerary}
               >
                 {isInItinerary ? "Remove from itinerary" : "Add to itinerary"}
               </Button>
