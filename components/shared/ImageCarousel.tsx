@@ -41,7 +41,6 @@ export default function ImageCarousel({
   images,
   className,
 }: ImageCarouselProps) {
-  const [isError, setIsError] = useState<boolean>(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const hasImages = images.length > 0;
@@ -75,7 +74,7 @@ export default function ImageCarousel({
           transform: hasImages ? `translateX(-${safeIndex * 100}%)` : undefined,
         }}
       >
-        {hasImages && !isError ? (
+        {hasImages ? (
           images.map((src) => (
             <div key={src} className="relative h-full w-full shrink-0">
               <Image
@@ -84,7 +83,6 @@ export default function ImageCarousel({
                 fill
                 className="object-cover"
                 sizes="14.5rem"
-                onError={() => setIsError(true)}
               />
             </div>
           ))
