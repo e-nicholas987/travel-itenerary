@@ -95,7 +95,7 @@ export default function FlightCard({
     >
       <div className="flex-1 py-4 sm:py-6">
         <header className="flex flex-col gap-4 px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3 sm:gap-4 min-w-0 md:min-w-[200px]">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0 md:min-w-50">
             {carrier?.logo ? (
               <Image
                 src={carrier.logo}
@@ -125,7 +125,7 @@ export default function FlightCard({
           </div>
 
           <div className="mt-4 md:mt-0 flex flex-1 flex-col items-stretch gap-4 md:flex-row md:items-center md:justify-center md:gap-6">
-            <div className="text-left md:text-right min-w-[72px]">
+            <div className="text-left md:text-right min-w-18">
               <p className="text-lg sm:text-xl font-bold text-black-primary leading-none">
                 {formatTime(departureDate)}
               </p>
@@ -134,7 +134,7 @@ export default function FlightCard({
               </p>
             </div>
 
-            <div className="flex flex-col items-center w-full max-w-full md:max-w-[220px]">
+            <div className="flex flex-col items-center w-full max-w-full md:max-w-55">
               <div className="mb-1 flex w-full items-center justify-between text-[11px] sm:text-xs font-medium text-black-secondary">
                 <AirplaneTakeOffIcon className="text-neutral-800" />
                 <span>
@@ -145,7 +145,7 @@ export default function FlightCard({
               <div className="relative w-full h-1.5 bg-blue-100 rounded-full overflow-hidden">
                 <div className="absolute top-0 left-1/4 right-1/4 h-full bg-primary-600 rounded-full" />
               </div>
-              <div className="mt-1 flex w-full justify-between text-[11px] sm:text-xs font-semibold text-black-primary">
+              <div className="mt-1 flex w-full justify-between text-[0.6875rem] sm:text-xs font-semibold text-black-primary">
                 <span>{departureAirport.code}</span>
                 <span className="text-black-secondary font-normal">
                   {stopsLabel}
@@ -164,7 +164,7 @@ export default function FlightCard({
             </div>
           </div>
 
-          <div className="mt-4 md:mt-0 text-right min-w-[120px]">
+          <div className="mt-4 md:mt-0 text-right min-w-30">
             <p className="text-xl sm:text-[1.75rem] text-black-primary font-semibold">
               {formattedPrice}
             </p>
