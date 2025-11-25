@@ -80,7 +80,7 @@ export default function ActivitiesCard({
                   {rating ? rating.toFixed(1) : "N/A"}
                   {typeof reviewCount === "number" && (
                     <span className="text-black-secondary leading-none">
-                      ({reviewCount} reviews)
+                      ({reviewCount.toLocaleString()} reviews)
                     </span>
                   )}
                 </span>
