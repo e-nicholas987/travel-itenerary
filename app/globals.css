@@ -30,11 +30,19 @@
 @layer base {
   :root {
     --topbar-height: 5.5rem;
+    --layout-padding: 1rem;
+
+    @media (min-width: 768px) {
+      --layout-padding: 1.25rem;
+    }
+
     @media (min-width: 1024px) {
       --topbar-height: 6.5rem;
     }
+
     @media (min-width: 1536px) {
       --topbar-height: 8.375rem;
+      --layout-padding: 2.5rem;
     }
   }
 }
