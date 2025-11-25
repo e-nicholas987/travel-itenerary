@@ -27,3 +27,5 @@ export { default as WarehouseIcon } from "./WarehouseIcon";
 export { default as StarIcon } from "./StarIcon";
 export { default as AirplaneTakeOffIcon } from "./AirplaneTakeOffIcon";
 export { default as AirplaneLandingIcon } from "./AirplaneLandingIcon";
+export { default as CaretCircleLeftIcon } from "./CaretCircleLeftIcon";
+export { default as CaretCircleRightIcon } from "./CaretCircleRightIcon";
