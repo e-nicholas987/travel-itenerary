@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { Button, InputField, SelectField } from "@/components/ui";
+import FormSection from "@/components/shared/FormSection";
 import { useCurrencies, useLanguages } from "@/queries";
 import type { SearchHotelsParams } from "@/features/hotels/types";
 import { useSearchHotelDestinations } from "../hooks/useSearchHotelDestinations";
@@ -154,16 +155,10 @@ export default function HotelsSearchForm({
       className="mb-8 rounded-sm bg-white sm:bg-neutral-300 sm:p-5 lg:p-6"
     >
       <div className="sm:space-y-6">
-        <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-            <h3 className="text-sm font-semibold text-black-primary">
-              Destination & dates
-            </h3>
-            <p className="text-xs font-medium text-black-secondary">
-              Choose where you&apos;re going and when you&apos;d like to stay.
-            </p>
-          </div>
-
+        <FormSection
+          title="Destination & dates"
+          description="Choose where you're going and when you'd like to stay."
+        >
           <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
             <Controller
               name="dest_id"
@@ -229,18 +224,12 @@ export default function HotelsSearchForm({
               error={errors.departure_date?.message}
             />
           </div>
-        </section>
+        </FormSection>
 
-        <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-            <h3 className="text-sm font-semibold text-black-primary">
-              Guests & rooms
-            </h3>
-            <p className="text-xs font-medium text-black-secondary">
-              Tell us who&apos;s travelling so we can match the right stay.
-            </p>
-          </div>
-
+        <FormSection
+          title="Guests & rooms"
+          description="Tell us who's travelling so we can match the right stay."
+        >
           <div className="grid gap-4 md:grid-cols-3">
             <InputField
               id="hotels-adults"
@@ -274,18 +263,12 @@ export default function HotelsSearchForm({
               error={errors.room_qty?.message}
             />
           </div>
-        </section>
+        </FormSection>
 
-        <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
-          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-            <h3 className="text-sm font-semibold text-black-primary">
-              Preferences & filters
-            </h3>
-            <p className="text-xs font-medium text-black-secondary">
-              Optional settings to tailor results to your needs.
-            </p>
-          </div>
-
+        <FormSection
+          title="Preferences & filters"
+          description="Optional settings to tailor results to your needs."
+        >
           <div className="grid gap-4 md:grid-cols-3">
             <Controller
               name="currency_code"
@@ -371,7 +354,7 @@ export default function HotelsSearchForm({
               error={errors.categories_filter?.message}
             />
           </div>
-        </section>
+        </FormSection>
       </div>
 
       <div className="mt-4 flex items-center justify-end gap-3 border-t border-neutral-500/40 pt-4">

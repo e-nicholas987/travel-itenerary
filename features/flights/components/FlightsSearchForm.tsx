@@ -2,9 +2,11 @@
 
 import { useMemo, useState } from "react";
 
+import CurrencyField from "@/components/shared/CurrencyField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
+import FormSection from "@/components/shared/FormSection";
 import { Button, InputField, SelectField } from "@/components/ui";
 import { FormProvider } from "react-hook-form";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -13,15 +15,14 @@ import type { SelectOption } from "@/types/common";
 import type { SearchFlightsParams } from "../types";
 import { useSearchFlightDestinations } from "../hooks/useSearchFlightDestinations";
 import {
-  flightsSearchSchema,
-  type FlightsSearchFormValues,
-} from "../validation/flightsSearchSchema";
-import CurrencyField from "@/components/shared/CurrencyField";
-import {
   FLIGHTS_CABIN_CLASS_OPTIONS,
   FLIGHTS_SORT_OPTIONS,
   FLIGHTS_STOPS_OPTIONS,
 } from "../constants/selectOptions";
+import {
+  flightsSearchSchema,
+  type FlightsSearchFormValues,
+} from "../validation/flightsSearchSchema";
 
 type FlightsSearchFormProps = {
   onSearch: (params: SearchFlightsParams) => void;
@@ -117,16 +118,10 @@ export default function FlightsSearchForm({
         className="mb-8 rounded-sm bg-white sm:bg-neutral-300 sm:p-5 lg:p-6"
       >
         <div className="sm:space-y-6">
-          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-              <h3 className="text-sm font-semibold text-black-primary">
-                Route & dates
-              </h3>
-              <p className="text-xs font-medium text-black-secondary">
-                Pick your departure, arrival and travel dates.
-              </p>
-            </div>
-
+          <FormSection
+            title="Route & dates"
+            description="Pick your departure, arrival and travel dates."
+          >
             <div className="grid gap-4 md:grid-cols-2">
               <Controller
                 name="fromId"
@@ -182,7 +177,9 @@ export default function FlightsSearchForm({
                 )}
               />
             </div>
+          </FormSection>
 
+          <FormSection>
             <div className="grid gap-4 md:grid-cols-2">
               <InputField
                 id="flights-depart-date"
@@ -200,18 +197,12 @@ export default function FlightsSearchForm({
                 error={errors.returnDate?.message}
               />
             </div>
-          </section>
+          </FormSection>
 
-          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-              <h3 className="text-sm font-semibold text-black-primary">
-                Passengers & cabin
-              </h3>
-              <p className="text-xs font-medium text-black-secondary">
-                Tell us who&apos;s flying and which cabin you prefer.
-              </p>
-            </div>
-
+          <FormSection
+            title="Passengers & cabin"
+            description="Tell us who's flying and which cabin you prefer."
+          >
             <div className="grid gap-4 md:grid-cols-3">
               <InputField
                 id="flights-adults"
@@ -249,18 +240,12 @@ export default function FlightsSearchForm({
                 )}
               />
             </div>
-          </section>
+          </FormSection>
 
-          <section className="space-y-4 rounded-sm bg-white p-4 sm:p-5">
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-              <h3 className="text-sm font-semibold text-black-primary">
-                Sorting & filters
-              </h3>
-              <p className="text-xs font-medium text-black-secondary">
-                Optional settings to fine-tune your search results.
-              </p>
-            </div>
-
+          <FormSection
+            title="Sorting & filters"
+            description="Optional settings to fine-tune your search results."
+          >
             <div className="grid gap-4 md:grid-cols-3 border-t border-neutral-500/40 pt-4 md:pt-4">
               <Controller
                 name="sort"
@@ -305,7 +290,7 @@ export default function FlightsSearchForm({
                 )}
               />
             </div>
-          </section>
+          </FormSection>
         </div>
 
         <div className="mt-4 flex items-center justify-end gap-3 border-t border-neutral-500/40 pt-4">
